@@ -48,11 +48,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   border-radius:20px;padding:20px 20px 18px;margin-bottom:16px;
   color:#fff;position:relative;overflow:hidden;
 }
-.hero::before{content:"";position:absolute;right:-24px;top:-24px;width:130px;height:130px;border-radius:50%;background:var(--teal);opacity:.12;}
-.hero::after{content:"";position:absolute;right:16px;top:24px;width:70px;height:70px;border-radius:50%;background:var(--teal2);opacity:.15;}
-.hero-label{font-size:10px;text-transform:uppercase;letter-spacing:.12em;opacity:.55;margin-bottom:4px}
-.hero-title{font-size:22px;font-weight:700;letter-spacing:.3px;line-height:1}
-.hero-sub{font-size:12px;opacity:.65;margin-top:4px;line-height:1.4}
+.hero::before{
+  content:"";position:absolute;inset:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.09) 1px,transparent 1.5px);
+  background-size:14px 14px;
+}
+.hero::after{content:"";position:absolute;right:-30px;top:-30px;width:150px;height:150px;border-radius:50%;background:var(--teal);opacity:.14;}
+.hero-glow{position:absolute;right:14px;top:18px;width:66px;height:66px;border-radius:50%;background:var(--teal2);opacity:.16;}
+.hero-icon{
+  position:absolute;right:20px;top:20px;width:52px;height:52px;border-radius:14px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px);
+}
+.hero-icon svg{width:26px;height:26px;color:var(--teal2);}
+.hero-content{position:relative;max-width:78%;}
+.hero-label{display:flex;align-items:center;gap:5px;font-size:10px;text-transform:uppercase;letter-spacing:.12em;opacity:.55;margin-bottom:6px}
+.hero-label svg{width:11px;height:11px;}
+.hero-title{font-size:22px;font-weight:700;letter-spacing:.3px;line-height:1.15}
+.hero-sub{font-size:12px;opacity:.65;margin-top:5px;line-height:1.45}
 
 /* ── FILTER BAR ── */
 .filter-bar{
@@ -72,6 +85,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .chip.black.active{background:#222;border-color:#222;}
 .chip.red.active{background:#922B21;border-color:#922B21;}
 .chip.green.active{background:#0B7A45;border-color:#0B7A45;}
+.chip{display:inline-flex;align-items:center;gap:6px;}
+.chip-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;box-shadow:0 0 0 2px rgba(255,255,255,.5) inset;}
+.chip.active .chip-dot{box-shadow:0 0 0 2px rgba(255,255,255,.35) inset;}
 
 /* ── FILTER MODE TABS ── */
 .filter-tabs{display:flex;gap:4px;width:100%;background:var(--surface);border-radius:10px;padding:3px;margin-bottom:10px;}
@@ -107,8 +123,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   display:flex;align-items:center;justify-content:space-between;
   margin:0 0 10px;
 }
-.section-title{font-size:11px;font-weight:700;color:var(--text2);
+.section-title{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--text2);
   text-transform:uppercase;letter-spacing:.08em}
+.section-title svg{width:12px;height:12px;color:var(--teal);}
 .section-count{font-size:11px;color:var(--text3);}
 
 /* ── RO BOX CARDS ── */
@@ -135,12 +152,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .tag-waste{background:#E6F7EF;color:#0B7A45;}
 .tag-waste.hazardous{background:#FEECEC;color:#C0392B;}
 .tag-type{background:#EAF3FE;color:#1A5276;}
+.tag-pill{display:inline-flex;align-items:center;gap:3px;}
+.tag-pill svg{width:9px;height:9px;flex-shrink:0;}
 
 /* Box SVG illustration */
 .box-illustration{
-  width:100%;height:72px;
+  width:100%;height:80px;
   display:flex;align-items:center;justify-content:center;
-  margin:4px 0 8px;
+  margin:4px 0 10px;border-radius:12px;
+  background:linear-gradient(180deg,var(--surface) 0%,#EDF1F5 100%);
+  border:1px solid var(--border);
 }
 
 .ro-card-name{font-size:12px;font-weight:700;color:var(--text1);line-height:1.3;margin-bottom:6px;}
@@ -185,8 +206,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   text-align:center;box-shadow:0 1px 3px rgba(15,41,66,.07),0 0 0 1px var(--border);
   margin-bottom:12px;
 }
-.no-result-icon{font-size:40px;margin-bottom:10px;}
-.no-result-title{font-size:16px;font-weight:600;margin-bottom:6px;}
+.no-result-icon{
+  width:56px;height:56px;border-radius:16px;background:var(--surface);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 12px;
+}
+.no-result-icon svg{width:26px;height:26px;color:var(--text3);}
+.no-result-title{font-size:16px;font-weight:700;margin-bottom:6px;color:var(--text1);}
 .no-result-sub{font-size:13px;color:var(--text2);line-height:1.5}
 
 /* ── SUMMARY BAR ── */
@@ -196,8 +221,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   overflow:hidden;
 }
 .summary-row{display:flex;}
-.summary-cell{flex:1;padding:11px 8px;text-align:center;border-right:1px solid var(--border);}
+.summary-cell{flex:1;padding:12px 6px 10px;text-align:center;border-right:1px solid var(--border);}
 .summary-cell:last-child{border-right:none;}
+.summary-cell svg{width:14px;height:14px;color:var(--teal);margin-bottom:5px;}
 .summary-n{font-size:18px;font-weight:800;color:var(--text1);}
 .summary-l{font-size:9px;color:var(--text3);margin-top:2px;text-transform:uppercase;letter-spacing:.05em;}
 
@@ -206,81 +232,142 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
 .ro-card{cursor:pointer;}
 
-/* ── LOCATION MODAL ── */
+/* ── DETAIL PAGE (full page, replaces bottom-sheet popup) ── */
 .modal-overlay{
-  position:fixed;inset:0;background:rgba(15,41,66,.45);
-  display:flex;align-items:flex-end;justify-content:center;
-  opacity:0;pointer-events:none;transition:opacity .2s;z-index:50;
+  position:fixed;inset:0;background:var(--surface);
+  opacity:0;pointer-events:none;transform:translateX(24px);
+  transition:opacity .22s ease,transform .22s ease;z-index:50;
+  display:flex;flex-direction:column;height:100vh;height:100dvh;
 }
-.modal-overlay.open{opacity:1;pointer-events:auto;}
+.modal-overlay.open{opacity:1;pointer-events:auto;transform:translateX(0);}
 .modal-sheet{
-  background:var(--card);width:100%;max-width:520px;
-  border-radius:20px 20px 0 0;max-height:82vh;display:flex;flex-direction:column;
-  transform:translateY(100%);transition:transform .25s cubic-bezier(.32,.72,0,1);
-  box-shadow:0 -8px 30px rgba(15,41,66,.25);
+  width:100%;height:100%;max-width:520px;margin:0 auto;
+  display:flex;flex-direction:column;background:var(--surface);
+  overflow:hidden;min-height:0;
 }
-.modal-overlay.open .modal-sheet{transform:translateY(0);}
-.modal-handle{width:36px;height:4px;border-radius:2px;background:var(--border);margin:8px auto 0;flex-shrink:0;}
-.modal-header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:10px 18px 10px;border-bottom:1px solid var(--border);flex-shrink:0;
+
+/* Sticky detail header — mirrors main .hdr for consistency */
+.detail-hdr{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);
+  padding:10px 14px;display:flex;align-items:center;gap:10px;
+  min-height:56px;flex-shrink:0;box-shadow:0 2px 12px rgba(15,41,66,.3);
 }
-.modal-eyebrow{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px;}
-.modal-title{font-size:15px;font-weight:800;color:var(--text1);}
-.modal-close{
-  width:28px;height:28px;border-radius:9px;background:var(--surface);
-  display:flex;align-items:center;justify-content:center;color:var(--text2);
-  flex-shrink:0;cursor:pointer;transition:background .15s;
+.detail-back{
+  width:34px;height:34px;border-radius:9px;cursor:pointer;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(255,255,255,.2);color:#fff;transition:background .15s;
 }
-.modal-close:active{background:var(--border);}
-.modal-list{overflow-y:auto;padding:2px 14px 16px;-webkit-overflow-scrolling:touch;}
-.loc-item{
-  display:flex;gap:10px;align-items:flex-start;
-  padding:8px 4px;border-bottom:1px solid var(--border);
+.detail-back:active{background:rgba(255,255,255,.15)}
+.detail-crumb{min-width:0;}
+.crumb-trail{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:rgba(255,255,255,.55);margin-bottom:2px;}
+.crumb-trail a{display:flex;align-items:center;gap:3px;color:rgba(255,255,255,.7);text-decoration:none;}
+.crumb-trail a svg{width:10px;height:10px;}
+.crumb-trail .sep{opacity:.5;}
+.crumb-trail .current{color:rgba(255,255,255,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.detail-title{font-size:14px;font-weight:800;color:#fff;letter-spacing:.02em;}
+
+/* Scrollable body wraps everything below the sticky header */
+.detail-body{flex:1;min-height:0;display:flex;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.modal-list{padding:2px 18px 28px;}
+.loc-list{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.loc-card{
+  display:flex;gap:11px;align-items:flex-start;
+  background:var(--card);border:1px solid var(--border);border-left:3px solid var(--card-accent,var(--teal));
+  border-radius:12px;padding:12px 13px;box-shadow:0 1px 3px rgba(15,41,66,.05);
+  transition:transform .12s,box-shadow .12s;
 }
-.loc-item:last-child{border-bottom:none;}
-.loc-no{
-  width:22px;height:22px;border-radius:6px;background:var(--surface);color:var(--text2);
-  font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;margin-top:1px;
+.loc-card:active{transform:scale(.98);}
+.loc-icon{
+  width:34px;height:34px;border-radius:10px;flex-shrink:0;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  background:color-mix(in srgb, var(--card-accent, var(--teal)) 12%, white);
+  color:var(--card-accent,var(--teal));
 }
-.loc-info{flex:1;min-width:0;}
-.loc-specific{font-size:12.5px;font-weight:700;color:var(--text1);line-height:1.35;}
-.loc-meta{font-size:11px;color:var(--text2);margin-top:2px;line-height:1.4;}
-.loc-meta b{color:var(--text2);font-weight:600;}
-.loc-empty{padding:24px 10px;text-align:center;font-size:12.5px;color:var(--text3);}
+.loc-icon svg{width:16px;height:16px;}
+.loc-idx{
+  position:absolute;top:-6px;left:-6px;width:16px;height:16px;border-radius:50%;
+  background:var(--navy);color:#fff;font-size:8px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(15,41,66,.3);
+}
+.loc-body{flex:1;min-width:0;}
+.loc-specific{font-size:13px;font-weight:700;color:var(--text1);line-height:1.35;margin-bottom:6px;}
+.loc-badges{display:flex;gap:5px;flex-wrap:wrap;}
+.loc-badge{
+  display:inline-flex;align-items:center;gap:3px;
+  font-size:9px;font-weight:700;padding:3px 8px;border-radius:6px;
+  background:var(--surface);color:var(--text2);border:1px solid var(--border);
+  text-transform:uppercase;letter-spacing:.03em;
+}
+.loc-badge svg{width:8px;height:8px;flex-shrink:0;}
+.loc-badge.owner{background:#EAF3FE;color:#1A5276;border-color:transparent;}
+.loc-empty{padding:28px 10px;text-align:center;font-size:12.5px;color:var(--text3);}
+.loc-empty svg{width:28px;height:28px;color:var(--text3);margin-bottom:8px;}
 
 /* Compact stat strip under header */
-.modal-stats{display:flex;gap:8px;padding:10px 18px 0;flex-shrink:0;}
+.modal-stats{display:flex;gap:8px;padding:14px 18px 0;flex-shrink:0;}
 .modal-stat{
   flex:1;display:flex;align-items:center;gap:7px;
-  background:var(--surface);border:1px solid var(--border);border-radius:10px;
-  padding:7px 10px;
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:9px 12px;box-shadow:0 1px 3px rgba(15,41,66,.06);
 }
 .modal-stat svg{width:14px;height:14px;color:var(--text3);flex-shrink:0;}
-.modal-stat .msv{font-size:14px;font-weight:800;color:var(--text1);line-height:1;font-variant-numeric:tabular-nums;}
+.modal-stat .msv{font-size:15px;font-weight:800;color:var(--text1);line-height:1;font-variant-numeric:tabular-nums;}
 .modal-stat .msl{font-size:8.5px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;margin-top:1px;}
 
-/* Box number chips inside modal */
-.boxno-section{padding:14px 18px 2px;flex-shrink:0;}
+/* Box number — asset card grid */
+.boxno-section{padding:16px 18px 2px;flex-shrink:0;}
 .boxno-label{
   font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;
-  letter-spacing:.07em;margin-bottom:7px;display:flex;align-items:center;gap:5px;
+  letter-spacing:.07em;margin-bottom:9px;display:flex;align-items:center;justify-content:space-between;gap:5px;
 }
+.boxno-label .lbl-left{display:flex;align-items:center;gap:5px;}
 .boxno-label svg{width:11px;height:11px;color:var(--teal);flex-shrink:0;}
-.boxno-chips{display:flex;flex-wrap:wrap;gap:5px;}
-.boxno-chip{
-  font-size:11px;font-weight:700;padding:4px 9px;border-radius:8px;
-  background:var(--surface);border:1px solid var(--border);color:var(--text1);
-  font-variant-numeric:tabular-nums;
+.boxno-hint{display:flex;align-items:center;gap:3px;font-size:8.5px;font-weight:700;color:var(--text3);text-transform:none;letter-spacing:0;}
+.boxno-hint svg{width:9px;height:9px;}
+.boxno-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+.boxno-card{
+  position:relative;cursor:pointer;user-select:none;overflow:hidden;
+  display:flex;align-items:center;gap:6px;
+  background:var(--card);border:1px solid var(--border);border-left:2.5px solid var(--card-accent,var(--teal));
+  border-radius:9px;padding:6px 8px;
+  transition:transform .12s,border-color .2s,background .2s;
 }
-.modal-divider{height:1px;background:var(--border);margin:12px 18px 0;flex-shrink:0;}
+.boxno-card:active{transform:scale(.95);}
+.boxno-card .bc-icon{
+  width:16px;height:16px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--card-accent,var(--teal));
+}
+.boxno-card .bc-icon svg{width:16px;height:16px;}
+.boxno-card .bc-num{font-size:11.5px;font-weight:800;color:var(--text1);font-variant-numeric:tabular-nums;line-height:1;}
+.boxno-card.copied{border-color:#0B7A45;background:#F3FBF6;}
+.boxno-card.copied .bc-num{color:#0B7A45;}
+.boxno-card.copied .bc-icon{color:#0B7A45;}
+.modal-divider{height:1px;background:var(--border);margin:16px 18px 0;flex-shrink:0;}
 .loc-section-label{
-  padding:12px 18px 6px;font-size:10px;font-weight:700;color:var(--text2);
-  text-transform:uppercase;letter-spacing:.07em;flex-shrink:0;
-  display:flex;align-items:center;gap:5px;
+  padding:16px 18px 8px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+}
+.loc-section-label .lbl-left{
+  font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;
+  letter-spacing:.07em;display:flex;align-items:center;gap:5px;
 }
 .loc-section-label svg{width:11px;height:11px;color:var(--teal);flex-shrink:0;}
+.loc-search{
+  display:flex;align-items:center;gap:6px;
+  background:var(--surface);border:1.5px solid var(--border);border-radius:9px;
+  padding:0 18px 12px;flex-shrink:0;margin:-6px 0 0;
+}
+.loc-search-box{
+  display:flex;align-items:center;gap:6px;width:100%;
+  background:var(--card);border:1.5px solid var(--border);border-radius:9px;padding:7px 10px;
+}
+.loc-search-box svg{width:13px;height:13px;color:var(--text3);flex-shrink:0;}
+.loc-search-box input{
+  border:none;background:transparent;outline:none;flex:1;min-width:0;
+  font-size:12.5px;color:var(--text1);font-family:inherit;
+}
+.loc-search-box input::placeholder{color:var(--text3);}
 </style>
 </head>
 <body>
@@ -310,9 +397,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
   <!-- HERO -->
   <div class="hero">
-    <div class="hero-label">Inventory Data</div>
-    <div class="hero-title">Roll Of (RO) Box</div>
-    <div class="hero-sub">Non-Hazardous &amp; Hazardous collecting containers — track availability &amp; placement</div>
+    <div class="hero-glow"></div>
+    <div class="hero-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 7h18l-1.6 13a2 2 0 0 1-2 1.8H6.6a2 2 0 0 1-2-1.8Z"/>
+        <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+        <path d="M10 11v6M14 11v6"/>
+      </svg>
+    </div>
+    <div class="hero-content">
+      <div class="hero-label">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+        Inventory Data
+      </div>
+      <div class="hero-title">Roll Of (RO) Box</div>
+      <div class="hero-sub">Non-Hazardous &amp; Hazardous collecting containers — track availability &amp; placement</div>
+    </div>
   </div>
 
   <!-- SUMMARY -->
@@ -342,11 +442,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     <div class="filter-panel" id="panel-color">
       <div class="filter-chips">
         <div class="chip active" data-filter="all">All</div>
-        <div class="chip blue" data-filter="Blue">🔵 Blue</div>
-        <div class="chip yellow" data-filter="Yellow">🟡 Yellow</div>
-        <div class="chip black" data-filter="Black">⚫ Black</div>
-        <div class="chip red" data-filter="Red">🔴 Red</div>
-        <div class="chip green" data-filter="Green">🟢 Green</div>
+        <div class="chip blue" data-filter="Blue"><span class="chip-dot" style="background:#2E86C1"></span>Blue</div>
+        <div class="chip yellow" data-filter="Yellow"><span class="chip-dot" style="background:#D4AC0D"></span>Yellow</div>
+        <div class="chip black" data-filter="Black"><span class="chip-dot" style="background:#333"></span>Black</div>
+        <div class="chip red" data-filter="Red"><span class="chip-dot" style="background:#E74C3C"></span>Red</div>
+        <div class="chip green" data-filter="Green"><span class="chip-dot" style="background:#27AE60"></span>Green</div>
       </div>
     </div>
 
@@ -369,7 +469,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
   <!-- SECTION HEADER -->
   <div class="section-head">
-    <div class="section-title">RO Box Inventory</div>
+    <div class="section-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+      RO Box Inventory
+    </div>
     <div class="section-count" id="visible-count"></div>
   </div>
 
@@ -384,33 +487,55 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   </div>
 </div>
 
-<!-- LOCATION MODAL -->
+<!-- RO BOX DETAIL — full page -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal-sheet" id="modal-sheet">
-    <div class="modal-handle"></div>
-    <div class="modal-header">
-      <div>
-        <div class="modal-eyebrow" id="modal-eyebrow">RO Box</div>
-        <div class="modal-title" id="modal-title">Box Detail</div>
+    <div class="detail-hdr">
+      <div class="detail-back" id="modal-close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
       </div>
-      <div class="modal-close" id="modal-close">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      <div class="detail-crumb">
+        <div class="crumb-trail">
+          <a href="index.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            Home
+          </a>
+          <span class="sep">/</span>
+          <span>RO Box Directory</span>
+          <span class="sep">/</span>
+          <span class="current" id="modal-eyebrow">Blue</span>
+        </div>
+        <div class="detail-title" id="modal-title">Box Detail</div>
       </div>
     </div>
-    <div class="modal-stats" id="modal-stats"></div>
-    <div class="boxno-section" id="boxno-section">
-      <div class="boxno-label">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12.6 2.7 21 11.1a2 2 0 0 1 0 2.8l-7 7a2 2 0 0 1-2.8 0L2.7 12.4a2 2 0 0 1-.6-1.5V4.4a1.7 1.7 0 0 1 1.7-1.7h6.5c.6 0 1.1.2 1.5.6Z"/><circle cx="7.3" cy="7.3" r="1.4" fill="currentColor" stroke="none"/></svg>
-        Registered Box Numbers
+    <div class="detail-body">
+      <div class="modal-stats" id="modal-stats"></div>
+      <div class="boxno-section" id="boxno-section">
+        <div class="boxno-label">
+          <span class="lbl-left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12.6 2.7 21 11.1a2 2 0 0 1 0 2.8l-7 7a2 2 0 0 1-2.8 0L2.7 12.4a2 2 0 0 1-.6-1.5V4.4a1.7 1.7 0 0 1 1.7-1.7h6.5c.6 0 1.1.2 1.5.6Z"/><circle cx="7.3" cy="7.3" r="1.4" fill="currentColor" stroke="none"/></svg>
+            Registered Box Numbers
+          </span>
+          <span class="boxno-hint">Tap to copy</span>
+        </div>
+        <div class="boxno-chips" id="boxno-chips"></div>
       </div>
-      <div class="boxno-chips" id="boxno-chips"></div>
+      <div class="modal-divider"></div>
+      <div class="loc-section-label">
+        <span class="lbl-left">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+          Placement Locations
+        </span>
+        <span class="boxno-hint" id="loc-search-count"></span>
+      </div>
+      <div class="loc-search">
+        <div class="loc-search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="search-modal-loc" placeholder="Cari lokasi...">
+        </div>
+      </div>
+      <div class="modal-list" id="modal-list"></div>
     </div>
-    <div class="modal-divider"></div>
-    <div class="loc-section-label">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="2.6"/></svg>
-      Placement Locations
-    </div>
-    <div class="modal-list" id="modal-list"></div>
   </div>
 </div>
 
@@ -665,7 +790,33 @@ const ICON = {
   pin:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="2.6"/></svg>`,
   tag:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12.6 2.7 21 11.1a2 2 0 0 1 0 2.8l-7 7a2 2 0 0 1-2.8 0L2.7 12.4a2 2 0 0 1-.6-1.5V4.4a1.7 1.7 0 0 1 1.7-1.7h6.5c.6 0 1.1.2 1.5.6Z"/><circle cx="7.3" cy="7.3" r="1.4" fill="currentColor" stroke="none"/></svg>`,
   chevron:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>`,
+  layers:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
+  package:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>`,
+  warehouse:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V9l9-6 9 6v12"/><path d="M9 21V13h6v8"/></svg>`,
+  clipboard:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="4" rx="1"/><path d="M7 5H6a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1"/><path d="m9 14 2 2 4-4"/></svg>`,
+  warning:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 17a1.8 1.8 0 0 0 1.5 2.7h16a1.8 1.8 0 0 0 1.5-2.7L13.7 3.9a1.8 1.8 0 0 0-3.4 0Z"/></svg>`,
+  check:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>`,
+  inbox:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11Z"/></svg>`,
+  copyIcon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`,
+  box3d:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v12.5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z"/><path d="M3 7 4.5 3.5h15L21 7"/><path d="M9.5 11v6M14.5 11v6"/></svg>`,
+  shield:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>`,
+  building:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18"/><path d="M4 22h16"/><path d="M14 9h4a2 2 0 0 1 2 2v11"/><line x1="8" y1="6" x2="10" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/></svg>`,
+  droplet:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s7 7.58 7 12a7 7 0 0 1-14 0c0-4.42 7-12 7-12Z"/></svg>`,
+  car:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14l1.4-5.6a1 1 0 0 0-.97-1.24H4.57a1 1 0 0 0-.97 1.24Z"/><path d="M5 17v2a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-2M16 17v2a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-2"/><path d="M4.6 10.16 7 6h10l2.4 4.16"/></svg>`,
+  factory:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 22V13l5 3v-3l5 3v-3l5 3V8h3v14z"/><path d="M3 22h18"/><path d="M19 8V5h-3v3"/></svg>`,
 };
+
+// Pilih ikon lokasi berdasarkan kata kunci nama area (tampilan lebih kontekstual)
+function pickLocIcon(mainArea, specific) {
+  const s = (mainArea + " " + specific).toLowerCase();
+  if (s.includes("security") || s.includes("pos ")) return ICON.shield;
+  if (s.includes("pond") || s.includes("water") || s.includes("cooling") || s.includes("desal") || s.includes("wtp")) return ICON.droplet;
+  if (s.includes("parking") || s.includes("park")) return ICON.car;
+  if (s.includes("warehouse") || s.includes("shelter") || s.includes("laydown") || s.includes("gudang")) return ICON.warehouse;
+  if (s.includes("admin") || s.includes("office") || s.includes("boo") || s.includes("canteen") || s.includes("clinic") || s.includes("mosque") || s.includes("weighbridge")) return ICON.building;
+  if (s.includes("plant") || s.includes("furnace") || s.includes("smelter") || s.includes("refinery") || s.includes("acid") || s.includes("etp") || s.includes("metal") || s.includes("concentrator") || s.includes("workshop")) return ICON.factory;
+  return ICON.pin;
+}
 
 // ── RENDER ──
 let activeMode   = "color";
@@ -711,10 +862,10 @@ function render() {
   const totalTypes      = RO_BOXES.length;
 
   document.getElementById("summary-row").innerHTML = `
-    <div class="summary-cell"><div class="summary-n">${totalTypes}</div><div class="summary-l">Types</div></div>
-    <div class="summary-cell"><div class="summary-n">${totalProvided}</div><div class="summary-l">Provided</div></div>
-    <div class="summary-cell"><div class="summary-n">${totalAvailable}</div><div class="summary-l">Available</div></div>
-    <div class="summary-cell"><div class="summary-n">${totalRequested}</div><div class="summary-l">Requested</div></div>
+    <div class="summary-cell">${ICON.layers}<div class="summary-n">${totalTypes}</div><div class="summary-l">Types</div></div>
+    <div class="summary-cell">${ICON.package}<div class="summary-n">${totalProvided}</div><div class="summary-l">Provided</div></div>
+    <div class="summary-cell">${ICON.warehouse}<div class="summary-n">${totalAvailable}</div><div class="summary-l">Available</div></div>
+    <div class="summary-cell">${ICON.clipboard}<div class="summary-n">${totalRequested}</div><div class="summary-l">Requested</div></div>
   `;
 
   count.textContent = list.length + " item" + (list.length!==1?"s":"");
@@ -722,7 +873,7 @@ function render() {
   if (list.length === 0) {
     grid.innerHTML = `
       <div class="no-result" style="grid-column:1/-1">
-        <div class="no-result-icon">📦</div>
+        <div class="no-result-icon">${ICON.inbox}</div>
         <div class="no-result-title">No RO Box Found</div>
         <div class="no-result-sub">${emptyMsg}</div>
       </div>`;
@@ -731,8 +882,8 @@ function render() {
 
   grid.innerHTML = list.map(b => {
     const wasteTag = b.hazardous
-      ? `<span class="tag-pill tag-waste hazardous">☠ Hazardous</span>`
-      : `<span class="tag-pill tag-waste">✅ Non-B3</span>`;
+      ? `<span class="tag-pill tag-waste hazardous">${ICON.warning} Hazardous</span>`
+      : `<span class="tag-pill tag-waste">${ICON.check} Non-B3</span>`;
     const locCount = LOCATIONS.filter(l => l.c.includes(b.color)).length;
     const boxCount = (BOX_NUMBERS[b.color] || []).length;
     return `
@@ -782,14 +933,54 @@ function render() {
 // ── LOCATION MODAL ──
 const modalOverlay = document.getElementById("modal-overlay");
 const modalSheet   = document.getElementById("modal-sheet");
+let currentDetailColor = null;
+let currentDetailHex   = "#0B9E8A";
+let currentDetailItems = [];
+let modalLocQuery = "";
+
+function renderModalLocations() {
+  const q = modalLocQuery;
+  const filtered = q
+    ? currentDetailItems.filter(it =>
+        it.s.toLowerCase().includes(q) || it.m.toLowerCase().includes(q) || it.o.toLowerCase().includes(q))
+    : currentDetailItems;
+
+  document.getElementById("loc-search-count").textContent =
+    q ? filtered.length + " found" : "";
+
+  const list = document.getElementById("modal-list");
+  list.innerHTML = filtered.length
+    ? `<div class="loc-list">${filtered.map(it => `
+      <div class="loc-card" style="--card-accent:${currentDetailHex}">
+        <div class="loc-icon">
+          <div class="loc-idx">${it.n}</div>
+          ${pickLocIcon(it.m, it.s)}
+        </div>
+        <div class="loc-body">
+          <div class="loc-specific">${it.s}</div>
+          <div class="loc-badges">
+            <span class="loc-badge">${ICON.building} ${it.m}</span>
+            <span class="loc-badge owner">${it.o}</span>
+          </div>
+        </div>
+      </div>`).join("")}</div>`
+    : `<div class="loc-empty">${ICON.inbox}<div>${
+        q ? `Tidak ada lokasi yang cocok dengan "${q}".`
+          : `Belum ada lokasi yang tercatat menggunakan RO Box ${currentDetailColor}.`
+      }</div></div>`;
+}
 
 function openLocationModal(color, hex) {
-  const items = LOCATIONS.filter(l => l.c.includes(color));
-  const nums  = BOX_NUMBERS[color] || [];
+  currentDetailColor = color;
+  currentDetailHex   = hex || "#0B9E8A";
+  currentDetailItems = LOCATIONS.filter(l => l.c.includes(color));
+  const nums = BOX_NUMBERS[color] || [];
+  modalLocQuery = "";
+  document.getElementById("search-modal-loc").value = "";
 
-  document.getElementById("modal-eyebrow").textContent = "RO Box · " + color;
-  document.getElementById("modal-eyebrow").style.color = hex;
-  document.getElementById("modal-title").textContent = "Box Detail";
+  document.getElementById("modal-eyebrow").textContent = color;
+  document.getElementById("modal-eyebrow").style.color = "#fff";
+  document.getElementById("modal-title").textContent = color + " Box Detail";
   document.getElementById("modal-stats").innerHTML = `
     <div class="modal-stat">
       ${ICON.tag}
@@ -797,31 +988,46 @@ function openLocationModal(color, hex) {
     </div>
     <div class="modal-stat">
       ${ICON.pin}
-      <div><div class="msv">${items.length}</div><div class="msl">Location</div></div>
+      <div><div class="msv">${currentDetailItems.length}</div><div class="msl">Location</div></div>
     </div>`;
 
   document.getElementById("boxno-chips").innerHTML = nums.length
-    ? nums.map(no => `<span class="boxno-chip">#${no}</span>`).join("")
+    ? `<div class="boxno-grid">${nums.map(no => `
+      <div class="boxno-card" data-no="${no}" style="--card-accent:${currentDetailHex}">
+        <div class="bc-icon">${ICON.box3d}</div>
+        <div class="bc-num">#${no}</div>
+      </div>`).join("")}</div>`
     : `<span class="loc-empty" style="padding:8px 0;">Belum ada nomor unit terdaftar.</span>`;
 
-  const list = document.getElementById("modal-list");
-  list.innerHTML = items.length
-    ? items.map(it => `
-      <div class="loc-item">
-        <div class="loc-no">${it.n}</div>
-        <div class="loc-info">
-          <div class="loc-specific">${it.s}</div>
-          <div class="loc-meta"><b>${it.m}</b> · ${it.o}</div>
-        </div>
-      </div>`).join("")
-    : `<div class="loc-empty">Belum ada lokasi yang tercatat menggunakan RO Box ${color}.</div>`;
+  document.querySelectorAll(".boxno-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const no = card.dataset.no;
+      navigator.clipboard?.writeText("#" + no).catch(() => {});
+      card.classList.add("copied");
+      card.querySelector(".bc-icon").innerHTML = ICON.check;
+      setTimeout(() => {
+        card.classList.remove("copied");
+        card.querySelector(".bc-icon").innerHTML = ICON.box3d;
+      }, 1200);
+    });
+  });
+
+  renderModalLocations();
 
   modalOverlay.classList.add("open");
+  document.querySelector(".detail-body").scrollTop = 0;
+  document.body.style.overflow = "hidden";
 }
 
 function closeLocationModal() {
   modalOverlay.classList.remove("open");
+  document.body.style.overflow = "";
 }
+
+document.getElementById("search-modal-loc").addEventListener("input", (e) => {
+  modalLocQuery = e.target.value.trim().toLowerCase();
+  renderModalLocations();
+});
 
 document.getElementById("modal-close").addEventListener("click", closeLocationModal);
 modalOverlay.addEventListener("click", (e) => {
