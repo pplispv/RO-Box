@@ -815,7 +815,7 @@ function render() {
 
   // Summary
   const totalProvided   = Object.values(BOX_NUMBERS).reduce((a,arr)=>a+arr.length,0);
-  const totalAvailable  = RO_BOXES.reduce((a,b)=>a+b.available,0);
+  const totalAvailable  = RO_BOXES.reduce((a,b)=>a+Math.max((BOX_NUMBERS[b.color]||[]).length - LOCATIONS.filter(l=>l.c.includes(b.color)).length, 0),0);
   const totalRequested  = RO_BOXES.reduce((a,b)=>a+b.requested,0);
   const totalTypes      = RO_BOXES.length;
 
@@ -844,6 +844,7 @@ function render() {
       : `<span class="tag-pill tag-waste">${ICON.check} Non-B3</span>`;
     const locCount = LOCATIONS.filter(l => l.c.includes(b.color)).length;
     const boxCount = (BOX_NUMBERS[b.color] || []).length;
+    const atLaydown = Math.max(boxCount - locCount, 0);
     return `
     <div class="ro-card" data-color="${b.color}" data-hex="${b.colorHex}">
       <div class="ro-card-stripe" style="background:linear-gradient(${b.stripeGrad})"></div>
@@ -861,13 +862,13 @@ function render() {
             <div class="l">Provide Site</div>
           </div>
           <div class="ro-stat">
-            <div><span class="n">${b.available}</span><span class="unit"> Unit</span></div>
+            <div><span class="n">${atLaydown}</span><span class="unit"> Unit</span></div>
             <div class="l">At Laydown</div>
           </div>
         </div>
         <div class="card-footer" style="background:${b.badgeBg};color:${b.badgeColor};">
           <div class="requested-row">
-            <span class="req-label">Total Unit</span>
+            <span class="req-label">Requested (as per contract)</span>
             <span class="req-value">${b.requested}<span class="unit">Unit</span></span>
           </div>
           <div class="detail-row">
