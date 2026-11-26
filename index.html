@@ -541,216 +541,174 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
 <script>
 // ══════════════════════════════════════════════
-//  RO BOX DATA
-//  Sesuaikan data ini dengan kondisi aktual PTFI
+//  KONEKSI GOOGLE SPREADSHEET
+//  Data RO Box sekarang dibaca dari Google Sheets (bukan hardcode).
+//  Ganti SHEET_ID dengan ID spreadsheet kamu:
+//  https://docs.google.com/spreadsheets/d/<SHEET_ID>/edit
+//  Spreadsheet harus di-share: "Anyone with the link" > Viewer
 // ══════════════════════════════════════════════
-const RO_BOXES = [
-  {
-    id: "RO-BLU-01",
-    color: "Blue",
-    colorHex: "#2E86C1",
-    stripeGrad: "135deg,#154360 0%,#2E86C1 100%",
-    type: "For Wood & Metal",
-    wasteCategory: "Heavy Inorganic Waste",
-    hazardous: false,
-    location: "Laydown Area / Provide Site",
-    provided: 11,
-    available: 4,
-    requested: 11,
-    badgeBg: "#D6EAF8",
-    badgeColor: "#1A5276",
-  },
-  {
-    id: "RO-YEL-01",
-    color: "Yellow",
-    colorHex: "#D4AC0D",
-    stripeGrad: "135deg,#8A6400 0%,#D4AC0D 100%",
-    type: "For Paper & Plastic",
-    wasteCategory: "Light Inorganic Waste",
-    hazardous: false,
-    location: "Laydown Area / Provide Site",
-    provided: 10,
-    available: 3,
-    requested: 10,
-    badgeBg: "#FEF9E7",
-    badgeColor: "#7D6608",
-  },
-  {
-    id: "RO-BLK-01",
-    color: "Black",
-    colorHex: "#222222",
-    stripeGrad: "135deg,#111 0%,#444 100%",
-    type: "Wood Scrap Import",
-    wasteCategory: "Imported Waste",
-    hazardous: false,
-    location: "Laydown Area / Provide Site",
-    provided: 1,
-    available: 1,
-    requested: 1,
-    badgeBg: "#EAECEE",
-    badgeColor: "#212F3D",
-  },
-  {
-    id: "RO-RED-01",
-    color: "Red",
-    colorHex: "#E74C3C",
-    stripeGrad: "135deg,#922B21 0%,#E74C3C 100%",
-    type: "For Paper & Plastic",
-    wasteCategory: "Light Inorganic Waste",
-    hazardous: true,
-    location: "Laydown Area / Provide Site",
-    provided: 2,
-    available: 3,
-    requested: 3,
-    badgeBg: "#FDEDEC",
-    badgeColor: "#922B21",
-  },
-  {
-    id: "RO-GRN-01",
-    color: "Green",
-    colorHex: "#27AE60",
-    stripeGrad: "135deg,#0B7A45 0%,#27AE60 100%",
-    type: "General Waste",
-    wasteCategory: "Non-Hazardous Waste",
-    hazardous: false,
-    location: "Laydown Area / Provide Site",
-    provided: 0,
-    available: 3,
-    requested: 1,
-    badgeBg: "#E6F7EF",
-    badgeColor: "#0B7A45",
-  },
-];
-
-// ══════════════════════════════════════════════
-//  LOCATION DATA — Waste Bin Summary per Location
-//  Kolom: n=No, m=Main Area, o=Area Owner, s=Specific Area, c=[warna RO Box]
-// ══════════════════════════════════════════════
-const LOCATIONS = [
-  {n:1,m:"Admin Building",o:"Human Resource & Business Services",s:"Admin Building",c:[]},
-  {n:2,m:"Clinic",o:"OSH",s:"Clinic / Fire Station",c:[]},
-  {n:3,m:"Warehouse",o:"Global Supply Chain",s:"Warehouse Freeport",c:[]},
-  {n:4,m:"CCB",o:"Electrical",s:"Central Control Building (CCB)",c:[]},
-  {n:5,m:"Workshop",o:"Maintenance",s:"Workshop Freeport",c:["Blue"]},
-  {n:6,m:"Warehouse",o:"Global Supply Chain",s:"Smoking Shelter Warehouse",c:["Blue"]},
-  {n:7,m:"Truck Parking",o:"Human Resource & Business Services",s:"Truck Parking (Main Gate)",c:[]},
-  {n:8,m:"Pos Security",o:"Risk Management Department",s:"Security Pos Gate 2",c:[]},
-  {n:9,m:"Car Parking",o:"Human Resource & Business Services",s:"Car Parking",c:[]},
-  {n:10,m:"Admin Building",o:"Human Resource & Business Services",s:"Mosque PTFI",c:[]},
-  {n:11,m:"Laboratory",o:"Technical Services",s:"Laboratory Smelter",c:[]},
-  {n:12,m:"Admin Building",o:"Human Resource & Business Services",s:"Change House",c:[]},
-  {n:13,m:"Admin Building",o:"Human Resource & Business Services",s:"Warehouse Chemical",c:[]},
-  {n:14,m:"Admin Building",o:"Human Resource & Business Services",s:"Canteen",c:[]},
-  {n:15,m:"Weighbridge",o:"Global Supply Chain",s:"Weighbridge Gate 2",c:[]},
-  {n:16,m:"EPR",o:"OSH",s:"Emergency Preparedness & Readiness (EPR)",c:[]},
-  {n:17,m:"BOO",o:"Central Services",s:"Office BOO",c:[]},
-  {n:18,m:"BOO",o:"Central Services",s:"Wika BOO",c:[]},
-  {n:19,m:"BOO",o:"ESD",s:"IGT & Haliburton BOO",c:["Blue"]},
-  {n:20,m:"Admin Building",o:"Human Resource & Business Services",s:"CMT Office",c:[]},
-  {n:21,m:"Warehouse",o:"Global Supply Chain",s:"Warehouse Yard DSV",c:[]},
-  {n:22,m:"Pos Security",o:"Risk Management Department",s:"Pos Security Gate 1",c:[]},
-  {n:23,m:"Maintenance",o:"Global Supply Chain",s:"Laydown Maintenance",c:[]},
-  {n:24,m:"DMW",o:"Maintenance",s:"Daily Maintenance Smelter (DMW)",c:["Black"]},
-  {n:25,m:"Electrorefinery",o:"Electrorefinery",s:"Electro Refinery (ER)",c:["Black"]},
-  {n:26,m:"Electrorefinery",o:"Electrorefinery",s:"Electro Refinery (ER-Main Gate)",c:[]},
-  {n:27,m:"Electrorefinery",o:"Electrorefinery",s:"Electro Refinery (ER-Tapping Gate)",c:[]},
-  {n:28,m:"Electrorefinery",o:"Electrorefinery",s:"Electro Refinery (ER-Security Gate)",c:[]},
-  {n:29,m:"Ground Floor FSF",o:"HM-FSF",s:"Ground Floor FSF",c:[]},
-  {n:30,m:"Ground Floor FCF",o:"HM-FCF",s:"Ground Floor FCF",c:[]},
-  {n:31,m:"HM-Anode",o:"Hot Metal",s:"Anode Yard (JPP Container)",c:["Yellow"]},
-  {n:32,m:"HM-Anode",o:"Hot Metal",s:"Anode Refractory Warehouse",c:["Yellow"]},
-  {n:33,m:"HM-Anode",o:"Hot Metal",s:"Anode Casting",c:[]},
-  {n:34,m:"Hot Metal",o:"Hot Metal",s:"Container Contractor Hot Metal",c:[]},
-  {n:35,m:"Hot Metal",o:"Hot Metal",s:"Shelter Hot Metal",c:["Red"]},
-  {n:36,m:"Hot Metal",o:"Hot Metal",s:"Aminity Building",c:[]},
-  {n:37,m:"CW Utility",o:"Utility",s:"Utility Cooling Tower",c:[]},
-  {n:38,m:"HM-FCF",o:"Hot Metal",s:"Matte Storage Area",c:[]},
-  {n:39,m:"HM-Steam Dryer",o:"HM-Steam Dryer",s:"Steam Dryer",c:["Red"]},
-  {n:40,m:"Material Handling",o:"MHSC",s:"Aldzama Shelter MH (Revert Handling)",c:[]},
-  {n:41,m:"HM-FCF",o:"Hot Metal",s:"MGM Shelter",c:[]},
-  {n:42,m:"HM-FCF",o:"Hot Metal",s:"FCF",c:[]},
-  {n:43,m:"SWTP",o:"Utility",s:"SWTP",c:[]},
-  {n:44,m:"Maintenance",o:"Maintenance",s:"Container Lintech Workshop",c:[]},
-  {n:45,m:"ETP",o:"Acid Plant & ETP",s:"Clean Gypsum Container",c:[]},
-  {n:46,m:"Filter Press",o:"Acid Plant & ETP",s:"Filter Press ETP",c:[]},
-  {n:47,m:"Filter Press",o:"Acid Plant & ETP",s:"Container Aldzama ETP",c:[]},
-  {n:48,m:"Temporary Workshop",o:"Central Services",s:"Temporary Workshop Area Evaporator",c:[]},
-  {n:49,m:"SWTP",o:"Acid Plant & ETP",s:"Shelter IGT SWTP",c:[]},
-  {n:50,m:"Material Handling",o:"MHSC",s:"Shelter MH",c:[]},
-  {n:51,m:"Material Handling",o:"MHSC",s:"Pos Security Concentrate",c:[]},
-  {n:52,m:"Acid",o:"Acid Plant & ETP",s:"Converter Acid",c:[]},
-  {n:53,m:"Acid",o:"Acid Plant & ETP",s:"Strong Acid Plant (SAP)",c:[]},
-  {n:54,m:"Quarto",o:"Utility",s:"Kontainer Quarto ETP",c:[]},
-  {n:55,m:"ETP",o:"Acid Plant & ETP",s:"ETP - Clarifier",c:[]},
-  {n:56,m:"Remin",o:"Utility",s:"Remin",c:[]},
-  {n:57,m:"Cooling Tower",o:"Utility",s:"Cooling Tower Acid",c:[]},
-  {n:58,m:"Acid",o:"Acid Plant & ETP",s:"Toilet Acid Plant",c:[]},
-  {n:59,m:"Acid",o:"Acid Plant & ETP",s:"Container Acid Plant",c:[]},
-  {n:60,m:"MEW",o:"MHSC",s:"Mobile Equipment Workshop",c:[]},
-  {n:61,m:"Slag Concentrator",o:"MHSC",s:"DAF Unit SC",c:[]},
-  {n:62,m:"Slag Concentrator",o:"MHSC",s:"Reagent SC",c:[]},
-  {n:63,m:"Slag Concentrator",o:"MHSC",s:"Toilet SC Reagent",c:[]},
-  {n:64,m:"Demin Plant",o:"Utility",s:"Demin Plant",c:[]},
-  {n:65,m:"STG",o:"Hot Metal",s:"STG",c:[]},
-  {n:66,m:"ETP",o:"Acid Plant & ETP",s:"Evaporator",c:[]},
-  {n:67,m:"ETP",o:"Acid Plant & ETP",s:"Dirty Gypsum",c:[]},
-  {n:68,m:"Slag Concentrator",o:"MHSC",s:"Slag Concentrator Workshop",c:[]},
-  {n:69,m:"Slag Concentrator",o:"MHSC",s:"Shelter SC",c:[]},
-  {n:70,m:"Acid",o:"Acid Plant & ETP",s:"Pump House Acid",c:[]},
-  {n:71,m:"Slag Concentrator",o:"MHSC",s:"Slag Grinding SC",c:[]},
-  {n:72,m:"STP",o:"Utility",s:"STP",c:[]},
-  {n:73,m:"Material Handling",o:"MHSC",s:"Shelter Final Slag",c:[]},
-  {n:74,m:"Desalination Plant",o:"Maintenance",s:"Desalination Plant",c:[]},
-  {n:75,m:"Temporary Central Service",o:"Central Services",s:"Temporary Central Service Contractor Office",c:[]},
-  {n:76,m:"Pos Security",o:"Risk Management Department",s:"Pos Security Laydown D",c:[]},
-  {n:77,m:"Pond",o:"ESD",s:"Pond Haliburton Container",c:[]},
-  {n:78,m:"Pond",o:"ESD",s:"Pond IGT Container",c:[]},
-  {n:79,m:"Pos Security",o:"Risk Management Department",s:"Pos Exit Desal",c:[]},
-  {n:80,m:"FMR",o:"FMR",s:"Shelter FMR (Outside)",c:[]},
-  {n:81,m:"FMR",o:"FMR",s:"Container Subcont (Outside)",c:[]},
-  {n:82,m:"FMR",o:"FMR",s:"Car Park",c:[]},
-  {n:83,m:"FMR",o:"FMR",s:"Pos Security Weighing",c:[]},
-  {n:84,m:"FMR",o:"FMR",s:"Pos Security Gate PMR",c:[]},
-  {n:85,m:"FMR",o:"FMR",s:"ISOS PMR",c:[]},
-  {n:86,m:"FMR",o:"FMR",s:"Workshop PMR",c:[]},
-  {n:87,m:"FMR",o:"FMR",s:"Workshop GTA",c:[]},
-  {n:88,m:"FMR",o:"FMR",s:"South Reagent PMR",c:[]},
-  {n:89,m:"FMR",o:"FMR",s:"PAB (North)",c:[]},
-  {n:90,m:"FMR",o:"FMR",s:"Reagent PMR",c:[]},
-  {n:91,m:"FMR",o:"FMR",s:"Shelter MAB",c:[]},
-  {n:92,m:"FMR",o:"FMR",s:"West PAB - Container Pond",c:[]},
-  {n:93,m:"FMR",o:"FMR",s:"HSB",c:[]},
-  {n:94,m:"FMR",o:"FMR",s:"HMP Cake",c:[]},
-  {n:95,m:"FMR",o:"FMR",s:"HMP Cake West",c:[]},
-  {n:96,m:"FMR",o:"FMR",s:"Cooling Tower PMR",c:[]},
-  {n:97,m:"FMR",o:"FMR",s:"HSB Lab",c:[]},
-  {n:98,m:"FMR",o:"FMR",s:"East MPB",c:[]},
-  {n:99,m:"Motorcycle Parking",o:"Human Resource & Business Services",s:"Motorcycle Park",c:[]},
-  {n:100,m:"Pos Security",o:"Risk Management Department",s:"Pos Security M2",c:[]},
-  {n:101,m:"M2",o:"Global Supply Chain",s:"Shelter M2",c:[]},
-  {n:102,m:"M2",o:"Global Supply Chain",s:"Container M2",c:[]},
-  {n:103,m:"Jetty Wharf",o:"Jetty",s:"Shelter Jetty Wharf",c:[]},
-  {n:104,m:"DWM",o:"Jetty",s:"Daily Maintenance Workshop Jetty",c:[]},
-  {n:105,m:"Jetty Wharf",o:"Jetty",s:"Container Pelindo Jetty",c:[]},
-  {n:106,m:"Pos Security",o:"Risk Management Department",s:"Pos Security Jetty Wharf",c:[]},
-  {n:107,m:"Pos Security",o:"Risk Management Department",s:"Bima Warehouse M1",c:[]},
-  {n:108,m:"Hiace Park",o:"Human Resource & Business Services",s:"Hiace Park",c:[]},
-  {n:109,m:"Weighbridge",o:"Global Supply Chain",s:"Container Weighing Gate 2",c:[]},
-  {n:110,m:"Pos Security",o:"Risk Management Department",s:"Pos Security Substation Jetty",c:[]},
-  {n:111,m:"FMR",o:"FMR",s:"TPS B3 PMR",c:[]},
-  {n:112,m:"Material Handling",o:"MHSC",s:"Final Slag Area",c:[]},
-];
-
-// ══════════════════════════════════════════════
-//  BOX NUMBERS — nomor unit fisik RO Box per warna
-// ══════════════════════════════════════════════
-const BOX_NUMBERS = {
-  Black:  ["9418","9420"],
-  Yellow: ["9416","9417","9419","9421","9422","9423","9424","9425","9427","9428","9426"],
-  Red:    ["9441","9442","9443","9444","9445"],
-  Blue:   ["9404","9405","9406","9407","9409","9410","9411","9412","9413","9414","9415","9446"],
-  Green:  ["9401","9402","9403"],
+const SHEET_ID = "1insMjCaClr6AilORfThBI2vigjKhhLnSMbI3jhsc7fg";
+const SHEET_TABS = {
+  types:     "RO_Box_Types",
+  boxNumbers:"Box_Numbers",
+  locations: "Locations",
 };
+const CACHE_KEY = "ro-box-data-v1";
+
+// Data (diisi dari spreadsheet)
+let RO_BOXES   = [];
+let LOCATIONS  = [];
+let BOX_NUMBERS = {};
+
+// Gaya kartu per warna (tampilan saja, bukan data). Warna baru otomatis pakai fallback.
+const RO_STYLE = {
+  Blue:   { stripeGrad:"135deg,#154360 0%,#2E86C1 100%", badgeBg:"#D6EAF8", badgeColor:"#1A5276" },
+  Yellow: { stripeGrad:"135deg,#8A6400 0%,#D4AC0D 100%", badgeBg:"#FEF9E7", badgeColor:"#7D6608" },
+  Black:  { stripeGrad:"135deg,#111 0%,#444 100%",       badgeBg:"#EAECEE", badgeColor:"#212F3D" },
+  Red:    { stripeGrad:"135deg,#922B21 0%,#E74C3C 100%", badgeBg:"#FDEDEC", badgeColor:"#922B21" },
+  Green:  { stripeGrad:"135deg,#0B7A45 0%,#27AE60 100%", badgeBg:"#E6F7EF", badgeColor:"#0B7A45" },
+};
+
+// ── CSV parser (aman untuk tanda kutip & koma di dalam sel) ──
+function parseCSV(text) {
+  const rows = []; let row = [], cur = "", inQ = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (inQ) {
+      if (ch === '"') { if (text[i+1] === '"') { cur += '"'; i++; } else inQ = false; }
+      else cur += ch;
+    } else if (ch === '"') inQ = true;
+    else if (ch === ",") { row.push(cur); cur = ""; }
+    else if (ch === "\n" || ch === "\r") {
+      if (ch === "\r" && text[i+1] === "\n") i++;
+      row.push(cur); cur = ""; rows.push(row); row = [];
+    } else cur += ch;
+  }
+  if (cur !== "" || row.length) { row.push(cur); rows.push(row); }
+  return rows.filter(r => r.some(c => c.trim() !== ""));
+}
+
+// Ubah CSV jadi array object berdasarkan judul kolom (baris 1)
+function csvToObjects(text) {
+  const rows = parseCSV(text);
+  if (!rows.length) return [];
+  const head = rows[0].map(h => h.trim().toLowerCase());
+  return rows.slice(1).map(r => {
+    const o = {};
+    head.forEach((h, i) => { o[h] = (r[i] || "").trim(); });
+    return o;
+  });
+}
+
+async function fetchTab(tabName) {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}&_=${Date.now()}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Gagal membaca sheet "${tabName}" (HTTP ${res.status})`);
+  const text = await res.text();
+  if (text.trim().startsWith("<")) throw new Error(`Sheet "${tabName}" tidak bisa diakses. Cek: (1) share "Anyone with the link", (2) nama sheet, (3) file harus berformat Google Sheets (di Drive: File > Save as Google Sheets), bukan file .xlsx.`);
+  return csvToObjects(text);
+}
+
+const isYes = v => ["ya","yes","true","1","y"].includes(String(v).trim().toLowerCase());
+const toNum = v => { const n = parseInt(String(v).replace(/[^\d-]/g, ""), 10); return isNaN(n) ? 0 : n; };
+
+// Susun data mentah spreadsheet ke struktur yang dipakai UI
+function buildData(typesRaw, boxRaw, locRaw) {
+  const boxes = typesRaw.filter(t => t.color).map(t => {
+    const color = t.color.trim();
+    const hex = t.color_hex || "#0B9E8A";
+    const st = RO_STYLE[color] || { stripeGrad:`135deg,${hex} 0%,${hex} 100%`, badgeBg:"#EEF2F5", badgeColor:"#1F2D3A" };
+    return {
+      id: t.id, color, colorHex: hex,
+      stripeGrad: st.stripeGrad, badgeBg: st.badgeBg, badgeColor: st.badgeColor,
+      type: t.type, wasteCategory: t.waste_category, hazardous: isYes(t.hazardous),
+      location: t.location, provided: toNum(t.provided),
+      available: toNum(t.available), requested: toNum(t.requested),
+    };
+  });
+
+  // samakan huruf besar/kecil warna dengan yang ada di RO_Box_Types
+  const colorMap = {}; boxes.forEach(b => colorMap[b.color.toLowerCase()] = b.color);
+  const normColor = c => colorMap[String(c).trim().toLowerCase()];
+
+  const nums = {};
+  boxRaw.forEach(r => {
+    const c = normColor(r.color);
+    if (!c || !r.box_no) return;
+    (nums[c] = nums[c] || []).push(r.box_no);
+  });
+
+  const locs = locRaw.filter(r => r.specific_area).map((r, i) => ({
+    n: toNum(r.no) || i + 1,
+    m: r.main_area || "",
+    o: r.area_owner || "",
+    s: r.specific_area,
+    c: (r.colors || "").split(/[,;/]/).map(normColor).filter(Boolean),
+  }));
+
+  return { boxes, nums, locs };
+}
+
+function applyData(d) {
+  RO_BOXES = d.boxes; BOX_NUMBERS = d.nums; LOCATIONS = d.locs;
+}
+
+async function loadData() {
+  showLoading();
+  try {
+    if (!SHEET_ID || SHEET_ID.startsWith("GANTI")) throw new Error("SHEET_ID belum diisi di kode (lihat bagian KONEKSI GOOGLE SPREADSHEET).");
+    const [t, b, l] = await Promise.all([
+      fetchTab(SHEET_TABS.types), fetchTab(SHEET_TABS.boxNumbers), fetchTab(SHEET_TABS.locations),
+    ]);
+    const d = buildData(t, b, l);
+    if (!d.boxes.length) throw new Error("Sheet RO_Box_Types kosong atau judul kolom tidak sesuai.");
+    applyData(d);
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify({ d, ts: Date.now() })); } catch (e) {}
+    render();
+  } catch (err) {
+    console.error(err);
+    // fallback: pakai data terakhir yang tersimpan di perangkat
+    let cached = null;
+    try { cached = JSON.parse(localStorage.getItem(CACHE_KEY)); } catch (e) {}
+    if (cached && cached.d) {
+      applyData(cached.d);
+      render();
+      showBanner("Offline / gagal sinkron. Menampilkan data tersimpan (" + new Date(cached.ts).toLocaleString("id-ID") + ").");
+    } else {
+      showError(err.message);
+    }
+  }
+}
+
+// ── State loading / error ──
+function showLoading() {
+  document.getElementById("visible-count").textContent = "";
+  document.getElementById("cards-grid").innerHTML = `
+    <div class="no-result" style="grid-column:1/-1">
+      <div class="no-result-title">Memuat data dari spreadsheet…</div>
+      <div class="no-result-sub">Mohon tunggu sebentar.</div>
+    </div>`;
+}
+function showError(msg) {
+  document.getElementById("cards-grid").innerHTML = `
+    <div class="no-result" style="grid-column:1/-1">
+      <div class="no-result-title">Data gagal dimuat</div>
+      <div class="no-result-sub">${msg}</div>
+      <div style="margin-top:12px"><span class="chip active" id="retry-btn">Coba lagi</span></div>
+    </div>`;
+  document.getElementById("retry-btn").addEventListener("click", loadData);
+}
+function showBanner(msg) {
+  let el = document.getElementById("sync-banner");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "sync-banner";
+    el.style.cssText = "background:#FEF9E7;color:#7D6608;font-size:11px;font-weight:600;padding:8px 12px;border-radius:10px;margin-bottom:12px;";
+    const grid = document.getElementById("cards-grid");
+    grid.parentNode.insertBefore(el, grid);
+  }
+  el.textContent = msg;
+}
 
 // ── SVG RO BOX per warna ──
 function boxSVG(color) {
@@ -1088,7 +1046,7 @@ document.getElementById("clear-serial").addEventListener("click", () => {
 });
 
 // ── INIT ──
-render();
+loadData();
 </script>
 </body>
 </html>
