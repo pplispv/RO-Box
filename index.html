@@ -909,10 +909,10 @@ function renderModalLocations() {
 
   const list = document.getElementById("modal-list");
   list.innerHTML = filtered.length
-    ? `<div class="loc-list">${filtered.map(it => `
+    ? `<div class="loc-list">${filtered.map((it, idx) => `
       <div class="loc-card" style="--card-accent:${currentDetailHex}">
         <div class="loc-icon">
-          <div class="loc-idx">${it.n}</div>
+          <div class="loc-idx">${idx + 1}</div>
           ${pickLocIcon(it.m, it.s)}
         </div>
         <div class="loc-body">
